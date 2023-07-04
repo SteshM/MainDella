@@ -18,4 +18,5 @@ public class Users {
     private String email;
     @Column(name= "dateOfBirth")
     private String DOB;
+    private String password;
 }
