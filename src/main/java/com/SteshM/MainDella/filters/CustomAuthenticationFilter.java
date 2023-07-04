@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -40,12 +41,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         response.setContentType("application/json");
+        map = new HashMap<>();
         map.put("error", "wrong information provided");
         jsonMapper.writeValue(response.getOutputStream(), map);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        response.setContentType("application/json");
+        map = new HashMap<>();
         User user = (User) authResult.getPrincipal();
         Algorithm algo = Algorithm.HMAC256("secret".getBytes());
 
@@ -55,6 +59,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
                 .withSubject(user.getUsername())
                 .sign(algo);
-        System.out.println(token);
+       map.put("token", token);
+       jsonMapper.writeValue(response.getOutputStream(),map);
     }
 }

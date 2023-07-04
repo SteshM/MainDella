@@ -12,12 +12,10 @@ import lombok.NoArgsConstructor;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
-    private long id;
+    private int userId;
     private String name;
     private UserType userType;
     private String email;
-    @Column(name= "dateOfBirth")
-    private String DOB;
+    private String dateOfBirth;
     private String password;
 }

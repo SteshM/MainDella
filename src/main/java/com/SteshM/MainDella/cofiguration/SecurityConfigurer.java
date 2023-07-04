@@ -1,6 +1,7 @@
 package com.SteshM.MainDella.cofiguration;
 
 import com.SteshM.MainDella.filters.CustomAuthenticationFilter;
+import com.SteshM.MainDella.filters.CustomAuthorizationFilter;
 import jakarta.servlet.FilterChain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,10 @@ public class SecurityConfigurer {
     public SecurityFilterChain getFilterChain(HttpSecurity http)throws Exception{
         return http
                 .csrf((csrf)->csrf.disable())
-                .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.requestMatchers("/register/**", "/login").permitAll())
+                .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.requestMatchers("/register/**", "/login","/hello").permitAll())
                 .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.anyRequest().authenticated())
                 .sessionManagement((sessionManagement)->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(new CustomAuthenticationFilter(this.getManager()), BasicAuthenticationFilter.class)
                 .build();
     }

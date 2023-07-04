@@ -4,10 +4,7 @@ import com.SteshM.MainDella.Entities.UserType;
 import com.SteshM.MainDella.Entities.Users;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Controller {
@@ -18,7 +15,7 @@ public class Controller {
     @Autowired
     UsersServices usersServices;
     @PostMapping("register/{who}")
-    public Users register(Users user, HttpServletResponse response, @PathVariable("who")UserType userType){
+    public Users register(@RequestBody  Users user, HttpServletResponse response, @PathVariable("who")UserType userType){
         return usersServices.register(user,response, userType);
     }
 }
