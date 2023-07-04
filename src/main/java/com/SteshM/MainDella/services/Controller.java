@@ -15,7 +15,9 @@ public class Controller {
     @Autowired
     UsersServices usersServices;
     @PostMapping("register/{who}")
-    public Users register(@RequestBody  Users user, HttpServletResponse response, @PathVariable("who")UserType userType){
-        return usersServices.register(user,response, userType);
+    public Users register(@RequestBody  Users user, HttpServletResponse response, @PathVariable("who")String userType){
+        UserType userType1 = UserType.valueOf(userType);
+
+        return usersServices.register(user,response, userType1);
     }
 }

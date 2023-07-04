@@ -15,7 +15,9 @@ public class Users {
     private int userId;
     private String name;
     private UserType userType;
+    @Column(unique = true)
     private String email;
+    @Column(nullable = false)
     private String dateOfBirth;
     private String password;
 }
