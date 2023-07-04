@@ -83,7 +83,9 @@ public class UsersServices implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user1 = this.getUser(username);
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(String.valueOf(user1.getUserType())));
+        UserType userType = user1.getUserType();
+        String authority = userType.toString();
+        authorities.add(new SimpleGrantedAuthority(authority));
         return new User(user1.getEmail(), user1.getPassword(), authorities);
     }
 }
