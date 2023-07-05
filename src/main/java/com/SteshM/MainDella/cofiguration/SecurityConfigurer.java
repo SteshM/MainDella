@@ -37,7 +37,7 @@ public class SecurityConfigurer {
     public SecurityFilterChain getFilterChain(HttpSecurity http)throws Exception{
         return http
                 .csrf((csrf)->csrf.disable())
-                .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.requestMatchers("/register/**", "/login","/hello").permitAll())
+                .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.requestMatchers("/register/**", "/refresh","/login","/hello").permitAll())
                 .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.anyRequest().authenticated())
                 .sessionManagement((sessionManagement)->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)

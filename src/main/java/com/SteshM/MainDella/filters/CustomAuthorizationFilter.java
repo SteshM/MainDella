@@ -23,6 +23,7 @@ if(request.getServletPath().equals("/register/Admin") ||
         request.getServletPath().equals("/register/Tutor")||
         request.getServletPath().equals("/register/Learner")||
         request.getServletPath().equals("/login")  ||
+        request.getServletPath().equals("/hello")||
         request.getServletPath().equals("/hello")){
     filterChain.doFilter(request,response);
         }else{

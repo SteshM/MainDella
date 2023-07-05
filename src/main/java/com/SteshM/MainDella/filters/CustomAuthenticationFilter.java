@@ -10,6 +10,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -59,7 +60,18 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
                 .withSubject(user.getUsername())
                 .sign(algo);
+        String refreshToken = JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000))
+                .withIssuer("Me")
+                .sign(algo);
        map.put("token", token);
+        map.put("refreshToken" , refreshToken);
        jsonMapper.writeValue(response.getOutputStream(),map);
+        JsonMapper mapper = new JsonMapper();
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        mapper.writeValue(response.getOutputStream(), map);
+
+
     }
 }
