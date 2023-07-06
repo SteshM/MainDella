@@ -8,19 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.SteshM.MainDella.services","com.SteshM.MainDella.cofiguration"})
+//@ComponentScan(basePackages = {"com.SteshM.MainDella.services"})
 @EnableJpaRepositories(basePackageClasses = {UsersRepo.class, ProfileRepo.class})
 @AutoConfiguration
 public class MainDellaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MainDellaApplication.class, args);
-	}
-	@Bean
-	PasswordEncoder setPasswordEncoder(){
-		return new BCryptPasswordEncoder();
 	}
 }

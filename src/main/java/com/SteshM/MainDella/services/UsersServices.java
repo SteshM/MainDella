@@ -1,20 +1,19 @@
 package com.SteshM.MainDella.services;
 
+import com.SteshM.MainDella.DTO.ResponseDTO;
+import com.SteshM.MainDella.DTO.UserDTO;
+import com.SteshM.MainDella.Entities.Profile;
 import com.SteshM.MainDella.Entities.UserType;
 import com.SteshM.MainDella.Entities.Users;
+import com.SteshM.MainDella.repo.ProfileRepo;
 import com.SteshM.MainDella.repo.UsersRepo;
+import com.SteshM.MainDella.repo.UserTypeRepo;
+import com.SteshM.MainDella.utilities.Utilities;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,68 +23,31 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class UsersServices implements UserDetailsService {
-    private final PasswordEncoder encoder;
-    JsonMapper jsonMapper = new JsonMapper();
-    Map<String, String> map;
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-    public void notFound(HttpServletResponse response, String message){
-        response.setContentType("application/json");
-        map = new HashMap<>();
-        map.put("response","fail");
-        map.put("message", message+" not found");
-        try{
-            jsonMapper.writeValue(response.getOutputStream(), map);
-        }catch (Exception e){
-            logger.warn(e.getMessage());
-        }
-    }
-    public Users getUser(String email){
-        return usersRepo.findByEmail(email);
-    }
-    public void alreadyExists(HttpServletResponse response){
-        response.setContentType("application/json");
-        map = new HashMap<>();
-        map.put("response","fail");
-        map.put("message", "already exists");
-        try{
-            jsonMapper.writeValue(response.getOutputStream(), map);
-        }catch (Exception e){
-            logger.warn(e.getMessage());
-        }
-    }
-    public void success(HttpServletResponse response){
-        response.setContentType("application/json");
-        map = new HashMap<>();
-        map.put("response","success");
-        map.put("message", "completed task");
-        try{
-            jsonMapper.writeValue(response.getOutputStream(), map);
-        }catch (Exception e){
-            logger.warn(e.getMessage());
-        }
-    }
-    @Autowired
-    UsersRepo usersRepo;
-    public Users register(Users user, HttpServletResponse response, UserType userType){
-        if(usersRepo.findByEmail(user.getEmail())!= null){
-            this.alreadyExists(response);
-            return null;
-        }else{
-            user.setUserType(userType);
-            user.setPassword(encoder.encode(user.getPassword()));
-            usersRepo.save(user);
-            return user;
-        }
+@Slf4j
+public class UsersServices {
+    private final UsersRepo usersRepo;
+    private final UserTypeRepo userTypeRepo;
+    private final ProfileRepo profileRepo;
+
+    public ResponseDTO register(UserDTO userDTO){
+        Users user = new Users();
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setDateOfBirth(userDTO.getDateOfBirth());
+
+        UserType userType = userTypeRepo.findById(userDTO.getUserTypeID()).get();
+        user.setUserType(userType);
+
+        Users createdUser = usersRepo.save(user);
+
+        Profile profile = new Profile();
+        profile.setUser(createdUser);
+        profile.setUsername(userDTO.getEmail());
+        profile.setPassword(userDTO.getPassword());
+        Profile createdProfile = profileRepo.save(profile);
+
+        return Utilities.createSuccessfulResponse("Successfully created a user", createdProfile);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user1 = this.getUser(username);
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        UserType userType = user1.getUserType();
-        String authority = userType.toString();
-        authorities.add(new SimpleGrantedAuthority(authority));
-        return new User(user1.getEmail(), user1.getPassword(), authorities);
-    }
+
 }

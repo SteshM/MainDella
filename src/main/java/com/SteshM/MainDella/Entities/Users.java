@@ -11,15 +11,17 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int userId;
     private String name;
+    @ManyToOne
+    @JoinColumn(name="userTypeId")
     private UserType userType;
     @Column(unique = true)
     private String email;
     @Column(nullable = false)
     private String dateOfBirth;
-    private String password;
 }
