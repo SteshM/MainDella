@@ -2,6 +2,7 @@ package com.SteshM.MainDella.services;
 
 import com.SteshM.MainDella.DTO.ResponseDTO;
 import com.SteshM.MainDella.DTO.UserDTO;
+import com.SteshM.MainDella.DTO.UserTypeDTO;
 import com.SteshM.MainDella.Entities.Profile;
 import com.SteshM.MainDella.Entities.UserType;
 import com.SteshM.MainDella.Entities.Users;
@@ -9,17 +10,12 @@ import com.SteshM.MainDella.repo.ProfileRepo;
 import com.SteshM.MainDella.repo.UsersRepo;
 import com.SteshM.MainDella.repo.UserTypeRepo;
 import com.SteshM.MainDella.utilities.Utilities;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -50,4 +46,20 @@ public class UsersServices {
     }
 
 
+    public ResponseDTO fetchUserTypes() {
+        List<UserType> userTypes = userTypeRepo.findAll();
+        List<UserTypeDTO> userTypeDTOList = new ArrayList<>();
+
+        userTypes.forEach(
+                userType -> {
+                    UserTypeDTO userTypeDTO = new UserTypeDTO();
+                    userTypeDTO.setUserTypeID(userType.getUserTypeID());
+                    userTypeDTO.setUserTypeName(userType.getUserTypeName());
+                    userTypeDTOList.add(userTypeDTO);
+                }
+        );
+        log.info("Get {} user types", userTypeDTOList.size());
+
+        return Utilities.createSuccessfulResponse("Successfully fetched user types", userTypeDTOList) ;
+    }
 }

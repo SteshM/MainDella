@@ -10,7 +10,7 @@ public class Utilities {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setStatusCode(200);
         responseDTO.setStatusDescription(message);
-        responseDTO.setData(List.of(data));
+        responseDTO.setData(data instanceof List ? (List<?>) data : List.of(data));
         return responseDTO;
     }
 }
