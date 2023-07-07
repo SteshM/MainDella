@@ -1,5 +1,6 @@
 package com.SteshM.MainDella.services;
 
+import com.SteshM.MainDella.DTO.LoginDTO;
 import com.SteshM.MainDella.DTO.ResponseDTO;
 import com.SteshM.MainDella.DTO.UserDTO;
 import com.SteshM.MainDella.DTO.UserTypeDTO;
@@ -61,5 +62,32 @@ public class UsersServices {
         log.info("Get {} user types", userTypeDTOList.size());
 
         return Utilities.createSuccessfulResponse("Successfully fetched user types", userTypeDTOList) ;
+    }
+
+
+    public ResponseDTO login(LoginDTO loginDTO) {
+        String username = loginDTO.getUsername();
+        Profile profile = profileRepo.findByUsername(username);
+        if (profile == null){
+            log.info("User with username {} not found",username);
+            return  Utilities.createFailedResponse(404 , "not found");
+        }
+        log.info("fetched a profile by username{}" , profile);
+        if (loginDTO.getPassword().equals(profile.getPassword())){
+            log.info("logged i successfully");
+            return Utilities.createSuccessfulResponse("logged in" , Collections.emptyList());
+        }
+        else {
+            log.info("The provided password did ot match");
+            return Utilities.createFailedResponse(401 , "Password mismatch");
+        }
+
+    }
+
+    public ResponseDTO fetchUsers() {
+        usersRepo.findAll();
+        log.info("fetch all users");
+         UserDTO userDTO;
+        return Utilities.createSuccessfulResponse("fetched all users",UserDTO );
     }
 }

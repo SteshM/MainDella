@@ -13,4 +13,11 @@ public class Utilities {
         responseDTO.setData(data instanceof List ? (List<?>) data : List.of(data));
         return responseDTO;
     }
+
+    public static ResponseDTO createFailedResponse( Integer statusCode,String message ) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setStatusCode(statusCode);
+        responseDTO.setStatusDescription(message);
+        return responseDTO;
+    }
 }

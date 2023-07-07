@@ -1,15 +1,12 @@
 package com.SteshM.MainDella.controller;
 
+import com.SteshM.MainDella.DTO.LoginDTO;
 import com.SteshM.MainDella.DTO.ResponseDTO;
 import com.SteshM.MainDella.DTO.UserDTO;
-import com.SteshM.MainDella.DTO.UserTypeDTO;
-import com.SteshM.MainDella.Entities.UserType;
 import com.SteshM.MainDella.services.UsersServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -26,5 +23,17 @@ public class UserController {
     public ResponseDTO getUsertypes(){
         return usersServices.fetchUserTypes();
     }
+
+    @PostMapping("/login")
+    public ResponseDTO login(@RequestBody LoginDTO loginDTO) {
+        return usersServices.login(loginDTO);
+    }
+
+    @GetMapping("/fetchUsers")
+    public ResponseDTO availableUsers(){
+        return usersServices.fetchUsers();
+    }
+
+
 
 }
