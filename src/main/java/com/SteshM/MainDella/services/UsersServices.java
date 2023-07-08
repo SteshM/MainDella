@@ -84,10 +84,14 @@ public class UsersServices {
 
     }
 
-    public ResponseDTO fetchUsers() {
-        usersRepo.findAll();
-        log.info("fetch all users");
-         UserDTO userDTO;
-        return Utilities.createSuccessfulResponse("fetched all users",UserDTO );
+
+    public ResponseDTO fetchAll() {
+        ArrayList<Users>users = (ArrayList<Users>) usersRepo.findAll();
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setStatusCode( 200);
+        responseDTO.setStatusDescription("Ok");
+        responseDTO.setData(users);
+        return responseDTO;
     }
 }
+

@@ -3,15 +3,21 @@ package com.SteshM.MainDella.controller;
 import com.SteshM.MainDella.DTO.LoginDTO;
 import com.SteshM.MainDella.DTO.ResponseDTO;
 import com.SteshM.MainDella.DTO.UserDTO;
+import com.SteshM.MainDella.Entities.Users;
+import com.SteshM.MainDella.repo.UsersRepo;
 import com.SteshM.MainDella.services.UsersServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @Slf4j
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
+    @Autowired
+    UsersRepo usersRepo;
     @Autowired
     UsersServices usersServices;
     @PostMapping("/register")
@@ -30,8 +36,9 @@ public class UserController {
     }
 
     @GetMapping("/fetchUsers")
-    public ResponseDTO availableUsers(){
-        return usersServices.fetchUsers();
+    public ResponseDTO fetchUsers(){
+        return usersServices.fetchAll();
+
     }
 
 
