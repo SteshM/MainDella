@@ -5,10 +5,7 @@ import com.SteshM.MainDella.DTO.ResponseDTO;
 import com.SteshM.MainDella.services.CourseServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -19,5 +16,10 @@ public class CourseController {
     @PostMapping("/createCourse")
     public ResponseDTO createCourse(@RequestBody CourseDTO course){
         return courseServices.createCourse(course);
+    }
+
+    @GetMapping("/getCourseTypes")
+    public ResponseDTO getCourseTypes(){
+        return courseServices.fetchCourseTypes();
     }
 }
