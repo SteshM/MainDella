@@ -23,17 +23,29 @@ public class CourseServices {
     private final CourseTypeRepo courseTypeRepo;
     private final CourseLevelRepo courseLevelRepo;
 
+
     public ResponseDTO createCourse(CourseDTO courseDTO) {
         CourseEntity courseEntity =new CourseEntity();
         courseEntity.setCourseName(courseDTO.getCourseName());
         courseEntity.setCourseDescription(courseDTO.getCourseDescription());
-
+        CourseLevel courseLevel = courseLevelRepo.findById(courseDTO.getCourseLevelId()).get();
+        courseEntity.setCourseLevel(courseLevel);
         CourseType courseType = courseTypeRepo.findById(courseDTO.getCourseTypeId()).get();
         courseEntity.setCourseType(courseType);
         CourseEntity createCourse = courseRepo.save(courseEntity);
         return Utilities.createSuccessfulResponse("Successfully created a course", createCourse);
 
     }
+
+    public ResponseDTO  getCourses() {
+     CourseEntity courseDTO= new CourseEntity();
+     courseDTO.setCourseName(courseDTO.getCourseName());
+     courseDTO.setCourseLevel(courseDTO.getCourseLevel());
+     courseDTO.setCourseDescription(courseDTO.getCourseDescription());
+     courseDTO.setCourseType(courseDTO.getCourseType());
+     return Utilities.createSuccessfulResponse("Successfully fetched Courses" , courseDTO);
+    }
+
 
 
     public ResponseDTO fetchCourseTypes() {
@@ -64,12 +76,9 @@ public class CourseServices {
                 }
         );
         log.info("Get {} CourseLevel",courseDTOList.size());
-        return Utilities.createSuccessfulResponse("Successfully fetched courseLeves;",courseDTOList);
+        return Utilities.createSuccessfulResponse("Successfully fetched courseLevels;",courseDTOList);
     }
 
-    public ResponseDTO fetchCourses() {
-        
-    }
 }
 
 
