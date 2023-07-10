@@ -7,4 +7,5 @@ public class CourseDTO {
     private String courseName;
     private String courseDescription;
     private int courseTypeId;
+    private int courseLevelId;
 }

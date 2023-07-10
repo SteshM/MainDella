@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,8 +20,9 @@ public class CourseEntity {
     @ManyToOne
     @JoinColumn(name="courseTypeId")
     private CourseType courseType;
+    @ManyToOne
+    @JoinColumn(name = "courselevelId")
+    private CourseLevel courseLevel;
     private String courseDescription;
-
-
 
 }

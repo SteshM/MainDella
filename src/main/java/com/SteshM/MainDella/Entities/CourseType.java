@@ -11,5 +11,4 @@ public class CourseType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courseTypeId;
     private String courseTypeName;
-
 }

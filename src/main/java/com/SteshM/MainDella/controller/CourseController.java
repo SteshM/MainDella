@@ -22,4 +22,18 @@ public class CourseController {
     public ResponseDTO getCourseTypes(){
         return courseServices.fetchCourseTypes();
     }
+
+    @GetMapping("/courselevel")
+    public ResponseDTO getCourseLevel(){
+        return courseServices.fetchCourseLevel();
+    }
+
+    @GetMapping("/courses")
+    public ResponseDTO getCourses(){
+        return courseServices.fetchCourses();
+    }
+
+
+
+
 }

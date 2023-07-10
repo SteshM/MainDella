@@ -2,6 +2,7 @@ package com.SteshM.MainDella.services;
 
 import com.SteshM.MainDella.DTO.*;
 import com.SteshM.MainDella.Entities.*;
+import com.SteshM.MainDella.repo.CourseLevelRepo;
 import com.SteshM.MainDella.repo.CourseRepo;
 import com.SteshM.MainDella.repo.CourseTypeRepo;
 import com.SteshM.MainDella.utilities.Utilities;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CourseServices {
     private final CourseRepo courseRepo;
     private final CourseTypeRepo courseTypeRepo;
+    private final CourseLevelRepo courseLevelRepo;
 
     public ResponseDTO createCourse(CourseDTO courseDTO) {
         CourseEntity courseEntity =new CourseEntity();
@@ -36,21 +38,39 @@ public class CourseServices {
 
     public ResponseDTO fetchCourseTypes() {
         List<CourseType> courseTypes = courseTypeRepo.findAll();
-        List<CourseDTO> courseDTOList = new ArrayList<>();
+        List<CourseType> courseDTOList = new ArrayList<>();
         courseTypes.forEach(
                 courseType -> {
-                    CourseTypeDTO courseTypeDTO = new CourseTypeDTO();
+                    CourseType courseTypeDTO = new CourseType();
                     courseTypeDTO.setCourseTypeId(courseType.getCourseTypeId());
-                    courseTypeDTO.setCourseTypename(courseTypeDTO.getCourseTypename());
+                    courseTypeDTO.setCourseTypeName(courseType.getCourseTypeName());
                     courseDTOList.add(courseTypeDTO);
-
                 }
         );
         log.info("Get {} userTypes",courseDTOList.size());
-        return Utilities.createSuccessfulResponse("Successfully fetched coursetypes",courseDTOList);
+        return Utilities.createSuccessfulResponse("Successfully fetched courseTypes",courseDTOList);
     }
 
+    public ResponseDTO fetchCourseLevel() {
+        List<CourseLevel> courseLevels = courseLevelRepo.findAll();
+        List<CourseLevel> courseDTOList = new ArrayList<>();
+        courseLevels.forEach(
+                courseLevel -> {
+                    CourseLevel courseLevel1DTO = new CourseLevel();
+                    courseLevel1DTO.setCourseLevelId(courseLevel.getCourseLevelId());
+                    courseLevel1DTO.setCourseLevelName(courseLevel.getCourseLevelName());
+                    courseLevel1DTO.setCourseLevelDescription(courseLevel.getCourseLevelDescription());
+                    courseDTOList.add(courseLevel1DTO);
+                }
+        );
+        log.info("Get {} CourseLevel",courseDTOList.size());
+        return Utilities.createSuccessfulResponse("Successfully fetched courseLeves;",courseDTOList);
     }
+
+    public ResponseDTO fetchCourses() {
+        
+    }
+}
 
 
 
