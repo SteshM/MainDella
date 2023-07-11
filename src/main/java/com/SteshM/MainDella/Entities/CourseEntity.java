@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Data
@@ -24,5 +25,7 @@ public class CourseEntity {
     @JoinColumn(name = "courselevelId")
     private CourseLevel courseLevel;
     private String courseDescription;
+    @OneToMany(mappedBy = "course")
+    Set<UserCourseMapping>userCourseMapping;
 
 }

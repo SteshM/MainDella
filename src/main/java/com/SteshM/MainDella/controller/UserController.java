@@ -20,11 +20,16 @@ public class UserController {
     UsersRepo usersRepo;
     @Autowired
     UsersServices usersServices;
+
+    //Register a User
     @PostMapping("/register")
     public ResponseDTO register(@RequestBody UserDTO user){
         log.info("Received a request to register a user. Payload received:{}",user);
         return usersServices.register(user);
     }
+
+    //Fetch UserTypes
+
     @GetMapping("/user-types")
     public ResponseDTO getUsertypes(){
         return usersServices.fetchUserTypes();

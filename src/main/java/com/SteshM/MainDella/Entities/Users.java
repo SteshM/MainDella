@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -24,4 +25,6 @@ public class Users {
     private String email;
     @Column(nullable = false)
     private String dateOfBirth;
+    @OneToMany(mappedBy = "users")
+    Set<UserCourseMapping> userCourseMapping;
 }
