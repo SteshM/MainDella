@@ -7,8 +7,6 @@ import com.SteshM.MainDella.utilities.Utilities;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +24,7 @@ public class CourseServices {
     private final CourseLevelRepo courseLevelRepo;
     private final TestRepo testRepo;
     private final UsersRepo usersRepo;
+    private final QuestionRepo questionRepo;
 
 
     public ResponseDTO createCourse(CourseDTO courseDTO) {
@@ -80,11 +79,10 @@ public class CourseServices {
     }
 
 
-    public ResponseDTO createTest(TestDTO testDTO) {
+    public ResponseDTO createTest(TestDTO testDTO, Integer courseID) {
         TestEntity testEntity1 = new TestEntity();
-        testEntity1.setTestId(testDTO.getTestID());
         testEntity1.setTestName(testDTO.getTestName());
-        testEntity1.setCourseEntity(courseRepo.findById(testDTO.getCourseId()).get());
+        testEntity1.setCourseEntity(courseRepo.findById(courseID).get());
         TestEntity testEntity= testRepo.save(testEntity1);
         return Utilities.createSuccessfulResponse("Successfully created a test", testEntity);
     }
@@ -98,6 +96,15 @@ public class CourseServices {
         userCourseMapping.setUser(users);
         UserCourseMapping createdEnrollment = userCourseMappingRepo.save(userCourseMapping);
         return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
+    }
+
+    public ResponseDTO create(QuestionDTO questionDTO, Integer testID) {
+        QuestionEntity questionEntity = new QuestionEntity();
+        TestEntity testEntity = testRepo.findById(testID).get();
+        questionEntity.setTestEntity(testEntity);
+        questionEntity.setQuestion(questionDTO.getQuestion());
+        QuestionEntity createQuestion = questionRepo.save(questionEntity);
+        return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
     }
 }
 
