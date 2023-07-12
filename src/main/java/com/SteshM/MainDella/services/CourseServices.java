@@ -2,13 +2,13 @@ package com.SteshM.MainDella.services;
 
 import com.SteshM.MainDella.DTO.*;
 import com.SteshM.MainDella.Entities.*;
-import com.SteshM.MainDella.repo.CourseLevelRepo;
-import com.SteshM.MainDella.repo.CourseRepo;
-import com.SteshM.MainDella.repo.CourseTypeRepo;
+import com.SteshM.MainDella.repo.*;
 import com.SteshM.MainDella.utilities.Utilities;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,14 +18,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Data
+
 public class CourseServices {
+     private final UserCourseMappingRepo userCourseMappingRepo;
     private final CourseRepo courseRepo;
     private final CourseTypeRepo courseTypeRepo;
     private final CourseLevelRepo courseLevelRepo;
+    private final TestRepo testRepo;
+    private final UsersRepo usersRepo;
 
 
     public ResponseDTO createCourse(CourseDTO courseDTO) {
-        CourseEntity courseEntity =new CourseEntity();
+        CourseEntity courseEntity = new CourseEntity();
         courseEntity.setCourseName(courseDTO.getCourseName());
         courseEntity.setCourseDescription(courseDTO.getCourseDescription());
         CourseLevel courseLevel = courseLevelRepo.findById(courseDTO.getCourseLevelId()).get();
@@ -37,15 +41,11 @@ public class CourseServices {
 
     }
 
-    public ResponseDTO  getCourses() {
-     CourseEntity courseDTO= new CourseEntity();
-     courseDTO.setCourseName(courseDTO.getCourseName());
-     courseDTO.setCourseLevel(courseDTO.getCourseLevel());
-     courseDTO.setCourseDescription(courseDTO.getCourseDescription());
-     courseDTO.setCourseType(courseDTO.getCourseType());
-     return Utilities.createSuccessfulResponse("Successfully fetched Courses" , courseDTO);
-    }
+    public ResponseDTO getCourses() {
+        List<CourseEntity> courses = courseRepo.findAll();
 
+        return Utilities.createSuccessfulResponse("Successfully fetched Courses", courses);
+    }
 
 
     public ResponseDTO fetchCourseTypes() {
@@ -59,8 +59,8 @@ public class CourseServices {
                     courseDTOList.add(courseTypeDTO);
                 }
         );
-        log.info("Get {} userTypes",courseDTOList.size());
-        return Utilities.createSuccessfulResponse("Successfully fetched courseTypes",courseDTOList);
+        log.info("Get {} userTypes", courseDTOList.size());
+        return Utilities.createSuccessfulResponse("Successfully fetched courseTypes", courseDTOList);
     }
 
     public ResponseDTO fetchCourseLevel() {
@@ -75,10 +75,30 @@ public class CourseServices {
                     courseDTOList.add(courseLevel1DTO);
                 }
         );
-        log.info("Get {} CourseLevel",courseDTOList.size());
-        return Utilities.createSuccessfulResponse("Successfully fetched courseLevels;",courseDTOList);
+        log.info("Get {} CourseLevel", courseDTOList.size());
+        return Utilities.createSuccessfulResponse("Successfully fetched courseLevels;", courseDTOList);
     }
 
+
+    public ResponseDTO createTest(TestDTO testDTO) {
+        TestEntity testEntity1 = new TestEntity();
+        testEntity1.setTestId(testDTO.getTestID());
+        testEntity1.setTestName(testDTO.getTestName());
+        testEntity1.setCourseEntity(courseRepo.findById(testDTO.getCourseId()).get());
+        TestEntity testEntity= testRepo.save(testEntity1);
+        return Utilities.createSuccessfulResponse("Successfully created a test", testEntity);
+    }
+
+
+    public ResponseDTO enroll(Integer courseID, Integer userID) {
+        CourseEntity courseEntity = courseRepo.findById(courseID).get();
+        Users users = usersRepo.findById(userID).get();
+        UserCourseMapping userCourseMapping = new UserCourseMapping();
+        userCourseMapping.setCourseEntity(courseEntity);
+        userCourseMapping.setUser(users);
+        UserCourseMapping createdEnrollment = userCourseMappingRepo.save(userCourseMapping);
+        return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
+    }
 }
 
 

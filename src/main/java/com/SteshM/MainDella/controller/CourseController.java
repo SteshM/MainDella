@@ -2,7 +2,10 @@ package com.SteshM.MainDella.controller;
 
 import com.SteshM.MainDella.DTO.CourseDTO;
 import com.SteshM.MainDella.DTO.ResponseDTO;
+import com.SteshM.MainDella.DTO.TestDTO;
 import com.SteshM.MainDella.Entities.CourseEntity;
+import com.SteshM.MainDella.Entities.TestEntity;
+import com.SteshM.MainDella.Entities.UserCourseMapping;
 import com.SteshM.MainDella.services.CourseServices;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -41,6 +44,17 @@ public class CourseController {
         return courseServices.getCourses();
 
     }
+    @PostMapping("/test")
+    public ResponseDTO createTest(@RequestBody TestDTO testEntity){
+        return courseServices.createTest(testEntity);
+    }
+
+    @PostMapping("{courseID}/enroll/{userID}")
+    public ResponseDTO enroll(@PathVariable Integer courseID, @PathVariable Integer userID){
+        return courseServices.enroll(courseID,userID);
+    }
+
+
 
 
 

@@ -8,5 +8,4 @@ public class TestDTO {
     private String testName;
     private int courseId;
 
-
 }

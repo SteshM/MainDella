@@ -18,4 +18,5 @@ public class TestEntity {
     @ManyToOne
     @JoinColumn(name = "courseId")
     private CourseEntity courseEntity;
+
 }

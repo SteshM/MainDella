@@ -25,6 +25,4 @@ public class Users {
     private String email;
     @Column(nullable = false)
     private String dateOfBirth;
-    @OneToMany(mappedBy = "users")
-    Set<UserCourseMapping> userCourseMapping;
 }
