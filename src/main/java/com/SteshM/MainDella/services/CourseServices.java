@@ -25,6 +25,7 @@ public class CourseServices {
     private final TestRepo testRepo;
     private final UsersRepo usersRepo;
     private final QuestionRepo questionRepo;
+    private final AnswerRepo answerRepo;
 
 
     public ResponseDTO createCourse(CourseDTO courseDTO) {
@@ -105,6 +106,16 @@ public class CourseServices {
         questionEntity.setQuestion(questionDTO.getQuestion());
         QuestionEntity createQuestion = questionRepo.save(questionEntity);
         return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
+    }
+
+
+    public ResponseDTO createAnswer(AnswerDTO answerDTO, Integer questionID) {
+        AnswersEntity answersEntity = new AnswersEntity();
+        QuestionEntity questionEntity  = questionRepo.findById(questionID).get();
+        answersEntity.setQuestionEntity(questionEntity);
+        answersEntity.setCorrect(answerDTO.getIsCorrect());
+        AnswersEntity createAnswer = answerRepo.save(answersEntity);
+        return Utilities.createSuccessfulResponse("successfully created correct answer",createAnswer );
     }
 }
 

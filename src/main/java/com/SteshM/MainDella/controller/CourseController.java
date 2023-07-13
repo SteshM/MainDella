@@ -1,9 +1,6 @@
 package com.SteshM.MainDella.controller;
 
-import com.SteshM.MainDella.DTO.CourseDTO;
-import com.SteshM.MainDella.DTO.QuestionDTO;
-import com.SteshM.MainDella.DTO.ResponseDTO;
-import com.SteshM.MainDella.DTO.TestDTO;
+import com.SteshM.MainDella.DTO.*;
 import com.SteshM.MainDella.Entities.CourseEntity;
 import com.SteshM.MainDella.Entities.TestEntity;
 import com.SteshM.MainDella.Entities.UserCourseMapping;
@@ -58,5 +55,9 @@ public class CourseController {
     @PostMapping("/test/{testID}/question")
     public ResponseDTO create(@RequestBody QuestionDTO questionDTO, @PathVariable Integer testID){
         return courseServices.create(questionDTO,testID);
+    }
+    @PostMapping("/question/{questionID}/answer")
+    public ResponseDTO createAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable Integer questionID){
+        return courseServices.createAnswer(answerDTO,questionID);
     }
 }
