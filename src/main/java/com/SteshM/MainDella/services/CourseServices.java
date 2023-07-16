@@ -26,8 +26,8 @@ public class CourseServices {
     private final UsersRepo usersRepo;
     private final QuestionRepo questionRepo;
     private final AnswerRepo answerRepo;
-
-
+    private final OptionsRepo optionsRepo;
+//Creating a course
     public ResponseDTO createCourse(CourseDTO courseDTO) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setCourseName(courseDTO.getCourseName());
@@ -40,14 +40,13 @@ public class CourseServices {
         return Utilities.createSuccessfulResponse("Successfully created a course", createCourse);
 
     }
-
+//List all courses
     public ResponseDTO getCourses() {
         List<CourseEntity> courses = courseRepo.findAll();
-
         return Utilities.createSuccessfulResponse("Successfully fetched Courses", courses);
     }
 
-
+//List all courses
     public ResponseDTO fetchCourseTypes() {
         List<CourseType> courseTypes = courseTypeRepo.findAll();
         List<CourseType> courseDTOList = new ArrayList<>();
@@ -62,7 +61,7 @@ public class CourseServices {
         log.info("Get {} userTypes", courseDTOList.size());
         return Utilities.createSuccessfulResponse("Successfully fetched courseTypes", courseDTOList);
     }
-
+//List courseLevel
     public ResponseDTO fetchCourseLevel() {
         List<CourseLevel> courseLevels = courseLevelRepo.findAll();
         List<CourseLevel> courseDTOList = new ArrayList<>();
@@ -79,16 +78,27 @@ public class CourseServices {
         return Utilities.createSuccessfulResponse("Successfully fetched courseLevels;", courseDTOList);
     }
 
-
+//Creating a Test
     public ResponseDTO createTest(TestDTO testDTO, Integer courseID) {
         TestEntity testEntity1 = new TestEntity();
         testEntity1.setTestName(testDTO.getTestName());
-        testEntity1.setCourseEntity(courseRepo.findById(courseID).get());
-        TestEntity testEntity= testRepo.save(testEntity1);
-        return Utilities.createSuccessfulResponse("Successfully created a test", testEntity);
+        testEntity1.setCourseID(courseID);
+    for(OptionsEntity option: testDTO.getQuestion().getOptionsEntities()){
+        optionsRepo.save(option);
+
+    }
+    questionRepo.save(testDTO.getQuestion());
+        testEntity1.setQuestionEntity(testDTO.getQuestion());
+
+        testRepo.save(testEntity1);
+        return Utilities.createSuccessfulResponse("Successfully created a test", testDTO);
+    }
+    public ResponseDTO getTests(int CourseID){
+        ArrayList<TestEntity> testEntities = testRepo.findByCourseID(CourseID);
+        return Utilities.createSuccessfulResponse("success", testEntities);
     }
 
-
+//Enrolling into a course
     public ResponseDTO enroll(Integer courseID, Integer userID) {
         CourseEntity courseEntity = courseRepo.findById(courseID).get();
         Users users = usersRepo.findById(userID).get();
@@ -98,25 +108,28 @@ public class CourseServices {
         UserCourseMapping createdEnrollment = userCourseMappingRepo.save(userCourseMapping);
         return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
     }
-
+//Creating a Question
     public ResponseDTO create(QuestionDTO questionDTO, Integer testID) {
         QuestionEntity questionEntity = new QuestionEntity();
-        TestEntity testEntity = testRepo.findById(testID).get();
-        questionEntity.setTestEntity(testEntity);
+        questionEntity.setTestId(testID);
         questionEntity.setQuestion(questionDTO.getQuestion());
         QuestionEntity createQuestion = questionRepo.save(questionEntity);
         return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
     }
 
 
+//Creating an answer
+
     public ResponseDTO createAnswer(AnswerDTO answerDTO, Integer questionID) {
         AnswersEntity answersEntity = new AnswersEntity();
         QuestionEntity questionEntity  = questionRepo.findById(questionID).get();
-        answersEntity.setQuestionEntity(questionEntity);
-        answersEntity.setCorrect(answerDTO.getIsCorrect());
+        answersEntity.setQuestionId(questionID);
+        answersEntity.setIsCorrect(answersEntity.getIsCorrect());
         AnswersEntity createAnswer = answerRepo.save(answersEntity);
         return Utilities.createSuccessfulResponse("successfully created correct answer",createAnswer );
     }
+
+
 }
 
 

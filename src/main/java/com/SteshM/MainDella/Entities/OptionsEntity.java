@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "answers")
-public class AnswersEntity {
+@Table(name = "options")
+public class OptionsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int answerId;
-    private char isCorrect;
-    private int questionId;
+    private int optionId;
+    private char choice;
+    private String description;
+
 }

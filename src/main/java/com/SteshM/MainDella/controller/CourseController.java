@@ -43,9 +43,15 @@ public class CourseController {
 
     }
     @PostMapping("/course/{courseID}/test")
-    public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable Integer courseID)
+    public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable int courseID)
     {
         return courseServices.createTest(testEntity,courseID);
+    }
+
+    @GetMapping("/course/Test/{courseID}")
+    public ResponseDTO getTests(@PathVariable int courseID)
+    {
+        return courseServices.getTests(courseID);
     }
 
     @PostMapping("/course/{courseID}/enroll/{userID}")
@@ -60,4 +66,6 @@ public class CourseController {
     public ResponseDTO createAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable Integer questionID){
         return courseServices.createAnswer(answerDTO,questionID);
     }
+
+
 }

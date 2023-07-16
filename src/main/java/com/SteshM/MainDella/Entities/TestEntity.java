@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,7 +19,9 @@ public class TestEntity {
     private int testId;
     private String testName;
     @ManyToOne
+    @JoinColumn(name = "questionId")
+    private QuestionEntity questionEntity;
     @JoinColumn(name = "courseId")
-    private CourseEntity courseEntity;
+    private int courseID;
 
 }
