@@ -4,9 +4,10 @@ import com.SteshM.MainDella.Entities.QuestionEntity;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Data
 public class TestDTO {
     private String testName;
-    private QuestionEntity question;
+//    private Collection<QuestionEntity>questions = new ArrayList<>();
 }

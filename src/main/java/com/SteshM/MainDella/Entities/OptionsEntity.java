@@ -16,5 +16,10 @@ public class OptionsEntity {
     private int optionId;
     private char choice;
     private String description;
+    @JoinColumn(name = "questionId")
+    private int questionId;
+
+
+
 
 }

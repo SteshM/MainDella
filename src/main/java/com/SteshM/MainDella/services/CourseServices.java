@@ -79,17 +79,15 @@ public class CourseServices {
     }
 
 //Creating a Test
-    public ResponseDTO createTest(TestDTO testDTO, Integer courseID) {
-        TestEntity testEntity1 = new TestEntity();
+    public ResponseDTO createTest(TestDTO testDTO, Integer courseID,TestEntity testEntity1) {
+        System.out.println(courseID);
+        TestEntity testEntity = new TestEntity();
         testEntity1.setTestName(testDTO.getTestName());
         testEntity1.setCourseID(courseID);
-    for(OptionsEntity option: testDTO.getQuestion().getOptionsEntities()){
-        optionsRepo.save(option);
-
-    }
-    questionRepo.save(testDTO.getQuestion());
-        testEntity1.setQuestionEntity(testDTO.getQuestion());
-
+//    for(QuestionEntity question: testDTO.getQuestions()){
+//        optionsRepo.saveAll(question.getOptionsEntities());
+//        questionRepo.save(question);
+//    }
         testRepo.save(testEntity1);
         return Utilities.createSuccessfulResponse("Successfully created a test", testDTO);
     }
@@ -109,11 +107,11 @@ public class CourseServices {
         return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
     }
 //Creating a Question
-    public ResponseDTO create(QuestionDTO questionDTO, Integer testID) {
-        QuestionEntity questionEntity = new QuestionEntity();
-        questionEntity.setTestId(testID);
-        questionEntity.setQuestion(questionDTO.getQuestion());
-        QuestionEntity createQuestion = questionRepo.save(questionEntity);
+    public ResponseDTO create(QuestionDTO questionDTO, Integer testID, QuestionEntity questionEntity1) {
+//        QuestionEntity questionEntity = new QuestionEntity();
+        questionEntity1.setTestId(testID);
+        questionEntity1.setQuestion(questionDTO.getQuestion());
+        QuestionEntity createQuestion = questionRepo.save(questionEntity1);
         return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
     }
 
@@ -130,6 +128,16 @@ public class CourseServices {
     }
 
 
+    public ResponseDTO createOptions(OptionsDTO optionsDTO, int questionId, OptionsEntity optionsEntity) {
+        optionsEntity.setQuestionId(questionId);
+        optionsEntity.setChoice(optionsEntity.getChoice());
+        optionsEntity.setDescription(optionsEntity.getDescription());
+        System.out.println(optionsEntity.getDescription());
+        System.out.println(optionsEntity.getChoice());
+
+        OptionsEntity createOptions = optionsRepo.save(optionsEntity);
+        return Utilities.createSuccessfulResponse("successfully created Options" , createOptions);
+    }
 }
 
 

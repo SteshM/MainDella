@@ -1,9 +1,7 @@
 package com.SteshM.MainDella.controller;
 
 import com.SteshM.MainDella.DTO.*;
-import com.SteshM.MainDella.Entities.CourseEntity;
-import com.SteshM.MainDella.Entities.TestEntity;
-import com.SteshM.MainDella.Entities.UserCourseMapping;
+import com.SteshM.MainDella.Entities.*;
 import com.SteshM.MainDella.services.CourseServices;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -43,9 +41,8 @@ public class CourseController {
 
     }
     @PostMapping("/course/{courseID}/test")
-    public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable int courseID)
-    {
-        return courseServices.createTest(testEntity,courseID);
+    public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable int courseID, TestEntity testEntity1 ) {
+        return courseServices.createTest(testEntity,courseID,testEntity1);
     }
 
     @GetMapping("/course/Test/{courseID}")
@@ -59,9 +56,17 @@ public class CourseController {
         return courseServices.enroll(courseID,userID);
     }
     @PostMapping("/test/{testID}/question")
-    public ResponseDTO create(@RequestBody QuestionDTO questionDTO, @PathVariable Integer testID){
-        return courseServices.create(questionDTO,testID);
+    public ResponseDTO create(@RequestBody QuestionDTO questionDTO, @PathVariable int testID, QuestionEntity questionEntity){
+        return courseServices.create(questionDTO,testID, questionEntity);
     }
+
+    @PostMapping("question/{questionId}/options")
+    public  ResponseDTO createOptions(@RequestBody OptionsDTO optionsDTO , @PathVariable int questionId , OptionsEntity optionsEntity){
+        System.out.println(optionsEntity.getDescription());
+        return courseServices.createOptions(optionsDTO,questionId , optionsEntity);
+    }
+
+
     @PostMapping("/question/{questionID}/answer")
     public ResponseDTO createAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable Integer questionID){
         return courseServices.createAnswer(answerDTO,questionID);

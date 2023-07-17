@@ -7,5 +7,6 @@ public class OptionsDTO {
     private int optionId;
     private char choice;
     private String description;
+    private int questionId;
 
 }
