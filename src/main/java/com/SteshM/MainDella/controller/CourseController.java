@@ -41,7 +41,8 @@ public class CourseController {
 
     }
     @PostMapping("/course/{courseID}/test")
-    public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable int courseID, TestEntity testEntity1 ) {
+    public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable int courseID, TestEntity testEntity1 )
+    {
         return courseServices.createTest(testEntity,courseID,testEntity1);
     }
 
@@ -52,23 +53,39 @@ public class CourseController {
     }
 
     @PostMapping("/course/{courseID}/enroll/{userID}")
-    public ResponseDTO enroll(@PathVariable Integer courseID, @PathVariable Integer userID){
+    public ResponseDTO enroll(@PathVariable Integer courseID, @PathVariable Integer userID)
+    {
         return courseServices.enroll(courseID,userID);
     }
+
+//    @GetMapping("/course/enrolled/courseId")
+//    public ResponseDTO enrolled(@PathVariable int courseId){
+//        return courseServices.enrolled(courseId);
+//    }
+//
+
     @PostMapping("/test/{testID}/question")
-    public ResponseDTO create(@RequestBody QuestionDTO questionDTO, @PathVariable int testID, QuestionEntity questionEntity){
+    public ResponseDTO create(@RequestBody QuestionDTO questionDTO, @PathVariable int testID, QuestionEntity questionEntity)
+    {
         return courseServices.create(questionDTO,testID, questionEntity);
     }
 
+    @GetMapping("/test/{testId}/questions")
+    public ResponseDTO getQuestions(@PathVariable int testId){
+        return courseServices.getQuestions(testId);
+    }
+
+
     @PostMapping("question/{questionId}/options")
-    public  ResponseDTO createOptions(@RequestBody OptionsDTO optionsDTO , @PathVariable int questionId , OptionsEntity optionsEntity){
-        System.out.println(optionsEntity.getDescription());
+    public  ResponseDTO createOptions(@RequestBody OptionsDTO optionsDTO , @PathVariable int questionId , OptionsEntity optionsEntity)
+    {
         return courseServices.createOptions(optionsDTO,questionId , optionsEntity);
     }
 
 
     @PostMapping("/question/{questionID}/answer")
-    public ResponseDTO createAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable Integer questionID){
+    public ResponseDTO createAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable Integer questionID)
+    {
         return courseServices.createAnswer(answerDTO,questionID);
     }
 

@@ -9,5 +9,5 @@ import java.util.Collection;
 @Data
 public class TestDTO {
     private String testName;
-//    private Collection<QuestionEntity>questions = new ArrayList<>();
+    private Collection<QuestionEntity>questions = new ArrayList<>();
 }

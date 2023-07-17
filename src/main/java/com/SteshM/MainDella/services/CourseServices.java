@@ -27,6 +27,8 @@ public class CourseServices {
     private final QuestionRepo questionRepo;
     private final AnswerRepo answerRepo;
     private final OptionsRepo optionsRepo;
+
+
 //Creating a course
     public ResponseDTO createCourse(CourseDTO courseDTO) {
         CourseEntity courseEntity = new CourseEntity();
@@ -40,11 +42,14 @@ public class CourseServices {
         return Utilities.createSuccessfulResponse("Successfully created a course", createCourse);
 
     }
+
+
 //List all courses
     public ResponseDTO getCourses() {
         List<CourseEntity> courses = courseRepo.findAll();
         return Utilities.createSuccessfulResponse("Successfully fetched Courses", courses);
     }
+
 
 //List all courses
     public ResponseDTO fetchCourseTypes() {
@@ -61,6 +66,8 @@ public class CourseServices {
         log.info("Get {} userTypes", courseDTOList.size());
         return Utilities.createSuccessfulResponse("Successfully fetched courseTypes", courseDTOList);
     }
+
+
 //List courseLevel
     public ResponseDTO fetchCourseLevel() {
         List<CourseLevel> courseLevels = courseLevelRepo.findAll();
@@ -73,10 +80,11 @@ public class CourseServices {
                     courseLevel1DTO.setCourseLevelDescription(courseLevel.getCourseLevelDescription());
                     courseDTOList.add(courseLevel1DTO);
                 }
-        );
+                );
         log.info("Get {} CourseLevel", courseDTOList.size());
         return Utilities.createSuccessfulResponse("Successfully fetched courseLevels;", courseDTOList);
     }
+
 
 //Creating a Test
     public ResponseDTO createTest(TestDTO testDTO, Integer courseID,TestEntity testEntity1) {
@@ -84,17 +92,17 @@ public class CourseServices {
         TestEntity testEntity = new TestEntity();
         testEntity1.setTestName(testDTO.getTestName());
         testEntity1.setCourseID(courseID);
-//    for(QuestionEntity question: testDTO.getQuestions()){
-//        optionsRepo.saveAll(question.getOptionsEntities());
-//        questionRepo.save(question);
-//    }
         testRepo.save(testEntity1);
         return Utilities.createSuccessfulResponse("Successfully created a test", testDTO);
     }
+
+
+    //Retrieving Tests
     public ResponseDTO getTests(int CourseID){
         ArrayList<TestEntity> testEntities = testRepo.findByCourseID(CourseID);
         return Utilities.createSuccessfulResponse("success", testEntities);
     }
+
 
 //Enrolling into a course
     public ResponseDTO enroll(Integer courseID, Integer userID) {
@@ -106,13 +114,26 @@ public class CourseServices {
         UserCourseMapping createdEnrollment = userCourseMappingRepo.save(userCourseMapping);
         return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
     }
+
+    // Get a list of enrolled Learners
+
+
+
 //Creating a Question
     public ResponseDTO create(QuestionDTO questionDTO, Integer testID, QuestionEntity questionEntity1) {
-//        QuestionEntity questionEntity = new QuestionEntity();
         questionEntity1.setTestId(testID);
         questionEntity1.setQuestion(questionDTO.getQuestion());
         QuestionEntity createQuestion = questionRepo.save(questionEntity1);
         return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
+    }
+
+
+    //Retrieving Questions
+    public ResponseDTO getQuestions(int testId) {
+        ArrayList<QuestionEntity>questionEntities = questionRepo.findByTestId(testId);
+        return Utilities.createSuccessfulResponse("successfully fetched all questions" , questionEntities);
+
+
     }
 
 
@@ -127,18 +148,22 @@ public class CourseServices {
         return Utilities.createSuccessfulResponse("successfully created correct answer",createAnswer );
     }
 
-
+//Creating Options
     public ResponseDTO createOptions(OptionsDTO optionsDTO, int questionId, OptionsEntity optionsEntity) {
         optionsEntity.setQuestionId(questionId);
         optionsEntity.setChoice(optionsEntity.getChoice());
         optionsEntity.setDescription(optionsEntity.getDescription());
-        System.out.println(optionsEntity.getDescription());
-        System.out.println(optionsEntity.getChoice());
-
         OptionsEntity createOptions = optionsRepo.save(optionsEntity);
-        return Utilities.createSuccessfulResponse("successfully created Options" , createOptions);
+        return Utilities.createSuccessfulResponse("successfully created Options", createOptions);
     }
-}
 
+
+//    public ResponseDTO enrolled(int courseId) {
+//        List<UserCourseMapping> userCourseMappings = userCourseMappingRepo.findAll();
+//        List<UserCourseMapping>userCourseMappings1 = new ArrayList<>();
+//        return Utilities.createSuccessfulResponse("Successfully fetched all enrolled Learners" , userCourseMappings);
+//
+//    }
+}
 
 

@@ -19,13 +19,10 @@ public class QuestionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int questionId;
     private String question;
-//    @ManyToMany
-//    @JoinColumn(name = "optionId")
-//    private Collection<OptionsEntity> optionsEntities = new ArrayList<>();
     @JoinColumn(name = "testID")
     private int testId;
-
-
-
+    @ManyToMany
+    @JoinColumn(name = "optionId")
+    private Collection<OptionsEntity> options = new ArrayList<>();
 
 }
