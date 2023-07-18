@@ -14,12 +14,12 @@ public class UserCourseMapping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userCourseMappingId;
-    @ManyToOne
+
     @JoinColumn(name = "userId")
-    private Users user;
-    @ManyToOne
+     private int userId;
+
     @JoinColumn(name = "courseId")
-    private CourseEntity courseEntity;
+    private int courseId;
 
 
 }

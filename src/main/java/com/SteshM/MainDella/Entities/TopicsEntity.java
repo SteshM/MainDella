@@ -16,9 +16,6 @@ public class TopicsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int topicId;
     private String topicName;
-//
-//    @JsonBackReference
-//    @OneToMany
     @JoinColumn(name = "courseId")
     private int courseId;
 }

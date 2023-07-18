@@ -107,8 +107,8 @@ public class CourseServices {
         CourseEntity courseEntity = courseRepo.findById(courseID).get();
         Users users = usersRepo.findById(userID).get();
         UserCourseMapping userCourseMapping = new UserCourseMapping();
-        userCourseMapping.setCourseEntity(courseEntity);
-        userCourseMapping.setUser(users);
+        userCourseMapping.setCourseId(courseEntity.getCourseId());
+        userCourseMapping.setUserId(users.getUserId());
         UserCourseMapping createdEnrollment = userCourseMappingRepo.save(userCourseMapping);
         return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
     }
@@ -142,8 +142,13 @@ public class CourseServices {
     }
 
     public ResponseDTO getEnrolledUsers(String courseName) {
-        ArrayList<Users>usersArrayList = courseRepo.findByCourseName(courseName);
-        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usersArrayList);
+       ArrayList<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseName(courseName);
+       ArrayList<String> usernames = new ArrayList<>();
+       for(UserCourseMapping userCourseMapping: userCourseMappings){
+           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
+           usernames.add(user.getName());
+       }
+        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
 
     }
 }

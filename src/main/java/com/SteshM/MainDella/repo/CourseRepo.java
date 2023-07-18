@@ -11,5 +11,5 @@ import java.util.ArrayList;
 @Repository
 public interface CourseRepo extends JpaRepository<CourseEntity,Integer> {
 
-    ArrayList<Users> findByCourseName(String courseName);
+    CourseEntity findByCourseName(String courseName);
 }
