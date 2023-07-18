@@ -65,7 +65,7 @@ public class CourseController {
 //
 
     @PostMapping("/test/{testID}/question")
-    public ResponseDTO create(@RequestBody QuestionDTO questionDTO, @PathVariable int testID, QuestionEntity questionEntity)
+    public ResponseDTO create(@RequestBody QuestionDTO questionDTO,@PathVariable int testID, QuestionEntity questionEntity)
     {
         return courseServices.create(questionDTO,testID, questionEntity);
     }
@@ -73,20 +73,6 @@ public class CourseController {
     @GetMapping("/test/{testId}/questions")
     public ResponseDTO getQuestions(@PathVariable int testId){
         return courseServices.getQuestions(testId);
-    }
-
-
-    @PostMapping("question/{questionId}/options")
-    public  ResponseDTO createOptions(@RequestBody OptionsDTO optionsDTO , @PathVariable int questionId , OptionsEntity optionsEntity)
-    {
-        return courseServices.createOptions(optionsDTO,questionId , optionsEntity);
-    }
-
-
-    @PostMapping("/question/{questionID}/answer")
-    public ResponseDTO createAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable Integer questionID)
-    {
-        return courseServices.createAnswer(answerDTO,questionID);
     }
 
 

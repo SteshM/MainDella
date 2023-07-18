@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AnswerDTO {
-    private char isCorrect;
+    private boolean isCorrect;
+    private String answer;
 }
 

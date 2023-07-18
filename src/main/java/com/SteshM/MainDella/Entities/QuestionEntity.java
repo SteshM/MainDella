@@ -1,5 +1,6 @@
 package com.SteshM.MainDella.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +22,8 @@ public class QuestionEntity {
     private String question;
     @JoinColumn(name = "testID")
     private int testId;
-    @ManyToMany
-    @JoinColumn(name = "optionId")
-    private Collection<OptionsEntity> options = new ArrayList<>();
-
+    @JsonManagedReference
+    @OneToMany
+    @JoinColumn(name = "answerId")
+    private List<AnswersEntity> options;
 }

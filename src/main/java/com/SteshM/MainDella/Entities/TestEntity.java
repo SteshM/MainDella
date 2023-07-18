@@ -22,9 +22,9 @@ public class TestEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int testId;
     private String testName;
-    @ManyToMany
-    @JoinColumn(name = "questionId")
-    private Collection<QuestionEntity> questionEntities= new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "testId")
+    private List<QuestionEntity> questionEntities;
     @JoinColumn(name = "courseId")
     private int courseID;
 
