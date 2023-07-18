@@ -11,5 +11,4 @@ import java.util.ArrayList;
 @Repository
 public interface UserCourseMappingRepo extends JpaRepository<UserCourseMapping,Integer> {
 
-public ArrayList<UserCourseMapping> findByCourseName(String courseName);
 }

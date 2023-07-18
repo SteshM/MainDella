@@ -10,12 +10,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "topic")
+@Table(name = "topics")
 public class TopicsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int topicId;
     private String topicName;
+    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "courseId")
-    private int courseId;
+    private CourseEntity courseEntity;
 }

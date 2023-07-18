@@ -20,10 +20,24 @@ import java.util.List;
 public class CourseController {
     @Autowired
     CourseServices courseServices;
+
+    @PostMapping("/path")
+    public ResponseDTO createPath(@RequestBody PathDTO path ){
+        return courseServices.createPath(path);
+    }
+    @GetMapping("/paths")
+    public ResponseDTO getPaths(){
+        return courseServices.getPaths();
+
+    }
     @PostMapping("/course/create")
     public ResponseDTO createCourse(@RequestBody CourseDTO course){
         return courseServices.createCourse(course);
+    }@PostMapping("/course/topic")
+    public ResponseDTO createTopic(@RequestBody TopicsDTO topic){
+        return courseServices.createTopic(topic);
     }
+
 
     @GetMapping("course/course-types")
     public ResponseDTO getCourseTypes(){

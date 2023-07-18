@@ -6,6 +6,7 @@ import lombok.Data;
 public class CourseDTO {
     private String courseName;
     private String courseDescription;
-    private int courseTypeId;
+    private int pathId;
     private int courseLevelId;
+
 }

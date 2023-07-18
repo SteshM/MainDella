@@ -26,7 +26,25 @@ public class CourseServices {
     private final UsersRepo usersRepo;
     private final QuestionRepo questionRepo;
     private final AnswerRepo answerRepo;
+    private final PathRepo pathRepo;
+    private final TopicsRepo topicsRepo;
 
+//Creating a Path
+
+public ResponseDTO createPath(PathDTO path) {
+    PathEntity pathEntity =new PathEntity();
+    pathEntity.setPathName(path.getPathName());
+    pathEntity.setDescription(path.getDescription());
+    PathEntity createPath = pathRepo.save(pathEntity);
+    return Utilities.createSuccessfulResponse("Successfully created a Path" , createPath);
+}
+
+//Fetching Paths
+public ResponseDTO getPaths() {
+    List<PathEntity> paths = pathRepo.findAll();
+    return Utilities.createSuccessfulResponse("Successfully fetched all paths", paths);
+
+}
 
 //Creating a course
     public ResponseDTO createCourse(CourseDTO courseDTO) {
@@ -35,8 +53,8 @@ public class CourseServices {
         courseEntity.setCourseDescription(courseDTO.getCourseDescription());
         CourseLevel courseLevel = courseLevelRepo.findById(courseDTO.getCourseLevelId()).get();
         courseEntity.setCourseLevel(courseLevel);
-        CourseType courseType = courseTypeRepo.findById(courseDTO.getCourseTypeId()).get();
-        courseEntity.setCourseType(courseType);
+        PathEntity path = pathRepo.findById(courseDTO.getPathId()).get();
+        courseEntity.setPath(path);
         CourseEntity createCourse = courseRepo.save(courseEntity);
         return Utilities.createSuccessfulResponse("Successfully created a course", createCourse);
 
@@ -47,6 +65,18 @@ public class CourseServices {
     public ResponseDTO getCourses() {
         List<CourseEntity> courses = courseRepo.findAll();
         return Utilities.createSuccessfulResponse("Successfully fetched Courses", courses);
+    }
+
+    //Creating Topics
+    public ResponseDTO createTopic(TopicsDTO topic) {
+    TopicsEntity topicsEntity = new TopicsEntity();
+    topicsEntity.setTopicName(topic.getTopicName());
+    CourseEntity courseEntity = courseRepo.findById(topic.getCourseId()).get();
+    topicsEntity.setCourseEntity(courseEntity);
+    topicsRepo.save(topicsEntity);
+    return Utilities.createSuccessfulResponse("Successfully created a topic", topic);
+
+
     }
 
 
@@ -142,15 +172,21 @@ public class CourseServices {
     }
 
     public ResponseDTO getEnrolledUsers(String courseName) {
-       ArrayList<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseName(courseName);
+//       ArrayList<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseName(courseName);
        ArrayList<String> usernames = new ArrayList<>();
-       for(UserCourseMapping userCourseMapping: userCourseMappings){
-           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
-           usernames.add(user.getName());
-       }
+//       for(UserCourseMapping userCourseMapping: userCourseMapping){
+//           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
+//           usernames.add(user.getName());
+//       }
         return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
 
     }
+
+
+
+
+
+
 }
 
 

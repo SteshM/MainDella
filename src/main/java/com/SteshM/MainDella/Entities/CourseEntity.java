@@ -20,8 +20,8 @@ public class CourseEntity {
     private int courseId;
     private String courseName;
     @ManyToOne
-    @JoinColumn(name="courseTypeId")
-    private CourseType courseType;
+    @JoinColumn(name="pathId")
+    private PathEntity path;
     @ManyToOne
     @JoinColumn(name = "courselevelId")
     private CourseLevel courseLevel;
