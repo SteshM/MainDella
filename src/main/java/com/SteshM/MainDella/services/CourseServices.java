@@ -28,6 +28,7 @@ public class CourseServices {
     private final AnswerRepo answerRepo;
     private final PathRepo pathRepo;
     private final TopicsRepo topicsRepo;
+    private final LessonsRepo lessonsRepo;
 
 //Creating a Path
 
@@ -78,6 +79,24 @@ public ResponseDTO getPaths() {
 
 
     }
+//List topics
+
+    public ResponseDTO getTopics() {
+        List<TopicsEntity>topics = topicsRepo.findAll();
+        return Utilities.createSuccessfulResponse("Successfully fetched topics",topics);
+    }
+
+    //Create Lessons
+    public ResponseDTO createLesson(LessonsDTO lessonsDTO) {
+    LessonsEntity lessonsEntity = new LessonsEntity();
+    lessonsEntity.setLessonName(lessonsDTO.getLessonName());
+    TopicsEntity topicsEntity = topicsRepo.findById(lessonsDTO.getTopicId()).get();
+    lessonsEntity.setTopics(topicsEntity);
+    lessonsRepo.save(lessonsEntity);
+    return Utilities.createSuccessfulResponse("Successfully created a Lesson" , lessonsDTO);
+    }
+
+
 
 
 //List all courses
@@ -183,10 +202,17 @@ public ResponseDTO getPaths() {
     }
 
 
+    public ResponseDTO getLessons()
+            {
+    List<LessonsEntity>lessonsEntities = lessonsRepo.findAll();
+    return Utilities.createSuccessfulResponse("Successfully fetched lessons", lessonsEntities);
+    }
 
+    public ResponseDTO createVideo(VideoDTO videoDTO) {
+    VideoEntity videoEntity  = new VideoEntity();
+    videoEntity.setVideoName(videoDTO.getVideoName());
 
-
-
+    }
 }
 
 

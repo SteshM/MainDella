@@ -33,9 +33,38 @@ public class CourseController {
     @PostMapping("/course/create")
     public ResponseDTO createCourse(@RequestBody CourseDTO course){
         return courseServices.createCourse(course);
-    }@PostMapping("/course/topic")
+    }
+    @GetMapping("/courses")
+    public ResponseDTO getCourses(){
+        return courseServices.getCourses();
+
+    }
+    @PostMapping("/course/topic")
     public ResponseDTO createTopic(@RequestBody TopicsDTO topic){
         return courseServices.createTopic(topic);
+    }
+
+    @GetMapping("/course/topics")
+    public ResponseDTO getTopics(){
+        return courseServices.getTopics();
+    }
+
+    @PostMapping("/course/lesson")
+    public ResponseDTO createLesson(@RequestBody  LessonsDTO lessonsDTO )
+    {
+        return courseServices.createLesson(lessonsDTO);
+    }
+
+    @GetMapping("/course/lessons")
+    public ResponseDTO getLessons(){
+        return courseServices.getLessons();
+
+    }
+
+    @PostMapping("/course/video")
+    public ResponseDTO createVideo(@RequestBody  VideoDTO videoDTO )
+    {
+        return courseServices.createVideo(videoDTO);
     }
 
 
@@ -49,11 +78,7 @@ public class CourseController {
         return courseServices.fetchCourseLevel();
     }
 
-    @GetMapping("/courses")
-    public ResponseDTO getCourses(){
-        return courseServices.getCourses();
 
-    }
     @PostMapping("/course/{courseID}/test")
     public ResponseDTO createTest(@RequestBody TestDTO testEntity, @PathVariable int courseID, TestEntity testEntity1 )
     {
