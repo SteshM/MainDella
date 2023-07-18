@@ -113,9 +113,6 @@ public class CourseServices {
         return Utilities.createSuccessfulResponse("successfully enrolled to a course" ,createdEnrollment);
     }
 
-    // Get a list of enrolled Learners
-
-
 
 //Creating a Question
     public ResponseDTO create(QuestionDTO questionDTO, Integer testID, QuestionEntity questionEntity1) {
@@ -144,6 +141,11 @@ public class CourseServices {
 
     }
 
+    public ResponseDTO getEnrolledUsers(String courseName) {
+        ArrayList<Users>usersArrayList = courseRepo.findByCourseName(courseName);
+        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usersArrayList);
+
+    }
 }
 
 

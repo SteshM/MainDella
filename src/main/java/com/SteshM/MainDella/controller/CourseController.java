@@ -58,11 +58,10 @@ public class CourseController {
         return courseServices.enroll(courseID,userID);
     }
 
-//    @GetMapping("/course/enrolled/courseId")
-//    public ResponseDTO enrolled(@PathVariable int courseId){
-//        return courseServices.enrolled(courseId);
-//    }
-//
+    @GetMapping("/{courseName}")
+    public ResponseDTO getUsersByCourse(@PathVariable String courseName){
+        return courseServices.getEnrolledUsers(courseName);
+    }
 
     @PostMapping("/test/{testID}/question")
     public ResponseDTO create(@RequestBody QuestionDTO questionDTO,@PathVariable int testID, QuestionEntity questionEntity)

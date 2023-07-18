@@ -25,5 +25,5 @@ public class QuestionEntity {
     @JsonManagedReference
     @OneToMany
     @JoinColumn(name = "answerId")
-    private List<AnswersEntity> options;
+    private Collection<AnswersEntity> options= new ArrayList<>();
 }
