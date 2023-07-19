@@ -1,5 +1,6 @@
 package com.SteshM.MainDella.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +16,10 @@ public class VideoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int videoId;
     private String videoName;
-    private int duration;
+    private String duration;
 
+    @JsonManagedReference
+    @ManyToOne
     @JoinColumn(name = "lessonId")
-    private int lessonId;
+    private LessonsEntity lessonsEntity;
 }

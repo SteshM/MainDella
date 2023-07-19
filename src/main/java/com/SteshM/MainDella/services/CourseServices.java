@@ -29,6 +29,8 @@ public class CourseServices {
     private final PathRepo pathRepo;
     private final TopicsRepo topicsRepo;
     private final LessonsRepo lessonsRepo;
+    private final  VideoRepo videoRepo;
+    private final PdfRepo pdfRepo;
 
 //Creating a Path
 
@@ -209,10 +211,28 @@ public ResponseDTO getPaths() {
     }
 
     public ResponseDTO createVideo(VideoDTO videoDTO) {
-    VideoEntity videoEntity  = new VideoEntity();
+    VideoEntity videoEntity = new VideoEntity();
     videoEntity.setVideoName(videoDTO.getVideoName());
-
+    videoEntity.setDuration(videoDTO.getDuration());
+    LessonsEntity lessonsEntity = lessonsRepo.findById(videoDTO.getLessonId()).get();
+    videoEntity.setLessonsEntity(lessonsEntity);
+    videoRepo.save(videoEntity);
+    return Utilities.createSuccessfulResponse("Successfully created a video",videoEntity);
     }
+
+    public ResponseDTO getVideos() {
+    List<VideoEntity>videoEntities = videoRepo.findAll();
+    return Utilities.createSuccessfulResponse("Successfully fetched all videos" , videoEntities);
+    }
+
+//    public ResponseDTO createPdf(PdfDTO pdfDTO) {
+//    PdfEntity pdfEntity = new PdfEntity();
+//    pdfEntity.setPdfName(pdfDTO.getPdfName());
+//    LessonsEntity lessonsEntity = lessonsRepo.findById(pdfDTO.getLessonId()).get();
+//    pdfEntity.setLessonsEntity(lessonsEntity);
+//    pdfRepo.save(pdfEntity);
+//    return Utilities.createSuccessfulResponse("Successfully created a Pdf",pdfEntity);
+//    }
 }
 
 

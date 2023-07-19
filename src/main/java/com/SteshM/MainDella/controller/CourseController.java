@@ -61,12 +61,6 @@ public class CourseController {
 
     }
 
-    @PostMapping("/course/video")
-    public ResponseDTO createVideo(@RequestBody  VideoDTO videoDTO )
-    {
-        return courseServices.createVideo(videoDTO);
-    }
-
 
     @GetMapping("course/course-types")
     public ResponseDTO getCourseTypes(){
@@ -113,5 +107,19 @@ public class CourseController {
         return courseServices.getQuestions(testId);
     }
 
+    @PostMapping("/video")
+    public ResponseDTO createVideo(@RequestBody VideoDTO videoDTO){
+        return courseServices.createVideo(videoDTO);
+}
+
+@GetMapping("/videos")
+public ResponseDTO getVideos(){
+        return  courseServices.getVideos();
+}
+//
+//@PostMapping("/pdf")
+//    public ResponseDTO createPdf(PdfDTO pdfDTO){
+//        return courseServices.createPdf(pdfDTO);
+}
 
 }

@@ -1,5 +1,6 @@
 package com.SteshM.MainDella.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,8 @@ public class PdfEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pdfId;
     private String pdfName;
+    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "lessonId")
-    private int lessonId;
+    private LessonsEntity lessonsEntity;
 }

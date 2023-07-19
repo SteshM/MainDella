@@ -6,7 +6,7 @@ import lombok.Data;
 public class VideoDTO {
     private int videoId;
     private String videoName;
-    private int duration;
+    private String duration;
     private int lessonId;
 
 
