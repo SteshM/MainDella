@@ -225,14 +225,14 @@ public ResponseDTO getPaths() {
     return Utilities.createSuccessfulResponse("Successfully fetched all videos" , videoEntities);
     }
 
-//    public ResponseDTO createPdf(PdfDTO pdfDTO) {
-//    PdfEntity pdfEntity = new PdfEntity();
-//    pdfEntity.setPdfName(pdfDTO.getPdfName());
-//    LessonsEntity lessonsEntity = lessonsRepo.findById(pdfDTO.getLessonId()).get();
-//    pdfEntity.setLessonsEntity(lessonsEntity);
-//    pdfRepo.save(pdfEntity);
-//    return Utilities.createSuccessfulResponse("Successfully created a Pdf",pdfEntity);
-//    }
+    public ResponseDTO createPdf(PdfDTO pdfDTO) {
+    PdfEntity pdfEntity = new PdfEntity();
+    pdfEntity.setPdfName(pdfDTO.getPdfName());
+    LessonsEntity lessonsEntity = lessonsRepo.findById(pdfDTO.getLessonId()).get();
+    pdfEntity.setLessonsEntity(lessonsEntity);
+    pdfRepo.save(pdfEntity);
+    return Utilities.createSuccessfulResponse("Successfully created a Pdf",pdfEntity);
+    }
 }
 
 

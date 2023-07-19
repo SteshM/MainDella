@@ -116,10 +116,10 @@ public class CourseController {
 public ResponseDTO getVideos(){
         return  courseServices.getVideos();
 }
-//
-//@PostMapping("/pdf")
-//    public ResponseDTO createPdf(PdfDTO pdfDTO){
-//        return courseServices.createPdf(pdfDTO);
+
+@PostMapping("/pdf")
+    public ResponseDTO createPdf(PdfDTO pdfDTO){
+        return courseServices.createPdf(pdfDTO);
 }
 
 }
