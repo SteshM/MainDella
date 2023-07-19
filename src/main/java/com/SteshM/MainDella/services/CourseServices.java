@@ -233,6 +233,11 @@ public ResponseDTO getPaths() {
     pdfRepo.save(pdfEntity);
     return Utilities.createSuccessfulResponse("Successfully created a Pdf",pdfEntity);
     }
+
+    public ResponseDTO getPdfs() {
+    List<PdfEntity>pdfEntities = pdfRepo.findAll();
+    return Utilities.createSuccessfulResponse("Successfully fetched Pdfs",pdfEntities);
+    }
 }
 
 

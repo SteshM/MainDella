@@ -122,4 +122,9 @@ public ResponseDTO getVideos(){
         return courseServices.createPdf(pdfDTO);
 }
 
+@GetMapping("/pdfs")
+    public ResponseDTO getPdfs(){
+        return courseServices.getPdfs();
+}
+
 }
