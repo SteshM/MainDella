@@ -1,6 +1,7 @@
 package com.SteshM.MainDella.services;
 
 import com.SteshM.MainDella.DTO.*;
+import com.SteshM.MainDella.DTO.response.ContentTypeDTO;
 import com.SteshM.MainDella.Entities.*;
 import com.SteshM.MainDella.repo.*;
 import com.SteshM.MainDella.utilities.Utilities;
@@ -20,7 +21,7 @@ import java.util.List;
 public class CourseServices {
      private final UserCourseMappingRepo userCourseMappingRepo;
     private final CourseRepo courseRepo;
-    private final CourseTypeRepo courseTypeRepo;
+    private final ContentTypeRepo contentTypeRepo;
     private final CourseLevelRepo courseLevelRepo;
     private final TestRepo testRepo;
     private final UsersRepo usersRepo;
@@ -92,29 +93,11 @@ public ResponseDTO getPaths() {
     public ResponseDTO createLesson(LessonsDTO lessonsDTO) {
     LessonsEntity lessonsEntity = new LessonsEntity();
     lessonsEntity.setLessonName(lessonsDTO.getLessonName());
+    lessonsEntity.setContent(lessonsDTO.getContent());
     TopicsEntity topicsEntity = topicsRepo.findById(lessonsDTO.getTopicId()).get();
     lessonsEntity.setTopics(topicsEntity);
     lessonsRepo.save(lessonsEntity);
     return Utilities.createSuccessfulResponse("Successfully created a Lesson" , lessonsDTO);
-    }
-
-
-
-
-//List all courses
-    public ResponseDTO fetchCourseTypes() {
-        List<CourseType> courseTypes = courseTypeRepo.findAll();
-        List<CourseType> courseDTOList = new ArrayList<>();
-        courseTypes.forEach(
-                courseType -> {
-                    CourseType courseTypeDTO = new CourseType();
-                    courseTypeDTO.setCourseTypeId(courseType.getCourseTypeId());
-                    courseTypeDTO.setCourseTypeName(courseType.getCourseTypeName());
-                    courseDTOList.add(courseTypeDTO);
-                }
-        );
-        log.info("Get {} userTypes", courseDTOList.size());
-        return Utilities.createSuccessfulResponse("Successfully fetched courseTypes", courseDTOList);
     }
 
 
@@ -192,17 +175,6 @@ public ResponseDTO getPaths() {
 
     }
 
-//    public ResponseDTO getEnrolledUsers(String courseName) {
-////       ArrayList<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseName(courseName);
-//       ArrayList<String> usernames = new ArrayList<>();
-//       for(UserCourseMapping userCourseMapping: userCourseMapping){
-//           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
-//           usernames.add(user.getName());
-//       }
-//        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
-//
-//    }
-
 
     public ResponseDTO getLessons()
             {
@@ -247,6 +219,24 @@ public ResponseDTO getPaths() {
            usernames.add(user.getName());
        }
         return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
+    }
+
+    public ResponseDTO fetchContentTypes() {
+            List<ContentType>contentTypes = contentTypeRepo.findAll();
+        log.info("Fetched {} contentTypes", contentTypes.size());
+
+        List<ContentTypeDTO>contentTypeDTOS = new ArrayList<>();
+
+            contentTypes.forEach(
+                    contentType -> {
+                        ContentTypeDTO contentTypeDTO = new ContentTypeDTO();
+                        contentTypeDTO.setContentTypeId(contentType.getContentTypeId());
+                        contentTypeDTO.setContentTypename(contentType.getContentTypeName());
+                        contentTypeDTOS.add(contentTypeDTO);
+                    }
+            );
+        return Utilities.createSuccessfulResponse("Successfully fetched contentTypes", contentTypeDTOS);
+
     }
 }
 

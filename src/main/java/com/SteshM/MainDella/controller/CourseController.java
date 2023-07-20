@@ -62,9 +62,9 @@ public class CourseController {
     }
 
 
-    @GetMapping("course/course-types")
-    public ResponseDTO getCourseTypes(){
-        return courseServices.fetchCourseTypes();
+    @GetMapping("course/content-types")
+    public ResponseDTO getContentTypes(){
+        return courseServices.fetchContentTypes();
     }
 
     @GetMapping("/course/course-level")

@@ -16,8 +16,13 @@ public class LessonsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int lessonId;
     private String lessonName;
+
+    private String content;
+
     @ManyToOne
     @JoinColumn(name = "topicId")
     private TopicsEntity topics;
 
+    @JoinColumn(name = "contentTypeId")
+    private int contentTypeId;
 }

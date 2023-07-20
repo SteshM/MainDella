@@ -6,5 +6,6 @@ import lombok.Data;
 public class LessonsDTO {
     private String lessonName;
     private int topicId;
+    private String content;
 
 }
