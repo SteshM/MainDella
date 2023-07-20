@@ -192,16 +192,16 @@ public ResponseDTO getPaths() {
 
     }
 
-    public ResponseDTO getEnrolledUsers(String courseName) {
-//       ArrayList<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseName(courseName);
-       ArrayList<String> usernames = new ArrayList<>();
+//    public ResponseDTO getEnrolledUsers(String courseName) {
+////       ArrayList<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseName(courseName);
+//       ArrayList<String> usernames = new ArrayList<>();
 //       for(UserCourseMapping userCourseMapping: userCourseMapping){
 //           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
 //           usernames.add(user.getName());
 //       }
-        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
-
-    }
+//        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
+//
+//    }
 
 
     public ResponseDTO getLessons()
@@ -237,6 +237,16 @@ public ResponseDTO getPaths() {
     public ResponseDTO getPdfs() {
     List<PdfEntity>pdfEntities = pdfRepo.findAll();
     return Utilities.createSuccessfulResponse("Successfully fetched Pdfs",pdfEntities);
+    }
+
+    public ResponseDTO getEnrolledUsers(int courseId) {
+        List<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseId(courseId);
+        List<String>usernames = new ArrayList<>();
+       for(UserCourseMapping userCourseMapping:userCourseMappings){
+           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
+           usernames.add(user.getName());
+       }
+        return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
     }
 }
 

@@ -91,9 +91,9 @@ public class CourseController {
         return courseServices.enroll(courseID,userID);
     }
 
-    @GetMapping("/{courseName}")
-    public ResponseDTO getUsersByCourse(@PathVariable String courseName){
-        return courseServices.getEnrolledUsers(courseName);
+    @GetMapping("/course/{courseId}")
+    public ResponseDTO getUsersByCourseId(@PathVariable int courseId){
+        return courseServices.getEnrolledUsers(courseId);
     }
 
     @PostMapping("/test/{testID}/question")
