@@ -1,5 +1,6 @@
 package com.SteshM.MainDella.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class LessonsEntity {
     private String lessonName;
 
     private String content;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "topicId")
     private TopicsEntity topics;

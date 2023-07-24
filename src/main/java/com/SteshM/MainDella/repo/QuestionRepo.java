@@ -4,9 +4,9 @@ import com.SteshM.MainDella.Entities.QuestionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface QuestionRepo extends JpaRepository<QuestionEntity, Integer> {
-    ArrayList<QuestionEntity> findByTestId(int testId);
+    List<QuestionEntity> findByTestId(int testId);
 }

@@ -22,8 +22,9 @@ public class QuestionEntity {
     private String question;
     @JoinColumn(name = "testID")
     private int testId;
+
     @JsonManagedReference
     @OneToMany
     @JoinColumn(name = "answerId")
-    private List<AnswersEntity> options= new ArrayList<>();
+    private List<AnswersEntity> options;
 }

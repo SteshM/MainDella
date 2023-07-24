@@ -19,4 +19,5 @@ public class Profile {
     private Users user;
     private String username;
     private String password;
+    private String role;
 }

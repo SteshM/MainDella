@@ -1,6 +1,6 @@
 package com.SteshM.MainDella.utilities;
 
-import com.SteshM.MainDella.DTO.ResponseDTO;
+import com.SteshM.MainDella.DTO.requests.ResponseDTO;
 
 import java.util.List;
 

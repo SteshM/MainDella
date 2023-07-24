@@ -1,11 +1,11 @@
 package com.SteshM.MainDella.services;
 
-import com.SteshM.MainDella.DTO.*;
+import com.SteshM.MainDella.DTO.requests.*;
+import com.SteshM.MainDella.DTO.response.PathDTO;
 import com.SteshM.MainDella.Entities.LessonsEntity;
 import com.SteshM.MainDella.Entities.PathEntity;
 import com.SteshM.MainDella.Entities.PdfEntity;
 import com.SteshM.MainDella.Entities.TopicsEntity;
-import com.SteshM.MainDella.repo.TopicsRepo;
 
 import java.util.ArrayList;
 

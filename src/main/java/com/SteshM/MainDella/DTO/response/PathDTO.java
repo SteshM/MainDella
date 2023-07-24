@@ -1,4 +1,4 @@
-package com.SteshM.MainDella.DTO;
+package com.SteshM.MainDella.DTO.response;
 
 import lombok.Data;
 
@@ -6,5 +6,4 @@ import lombok.Data;
 public class PathDTO {
     private String pathName;
     private String description;
-
 }

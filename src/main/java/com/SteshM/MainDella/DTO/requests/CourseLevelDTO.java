@@ -1,5 +1,6 @@
-package com.SteshM.MainDella.DTO;
+package com.SteshM.MainDella.DTO.requests;
 
+import com.SteshM.MainDella.DTO.requests.CourseDTO;
 import lombok.Data;
 
 @Data

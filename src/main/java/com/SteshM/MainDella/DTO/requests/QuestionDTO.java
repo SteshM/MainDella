@@ -1,7 +1,7 @@
-package com.SteshM.MainDella.DTO;
+package com.SteshM.MainDella.DTO.requests;
 
+import com.SteshM.MainDella.DTO.requests.AnswerDTO;
 import lombok.Data;
-import org.apache.catalina.LifecycleState;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class QuestionDTO {
     private String question;
-    private Collection<AnswerDTO> answers ;
+    private List<AnswerDTO> answers ;
 
 
 }

@@ -1,4 +1,4 @@
-package com.SteshM.MainDella.DTO;
+package com.SteshM.MainDella.DTO.requests;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

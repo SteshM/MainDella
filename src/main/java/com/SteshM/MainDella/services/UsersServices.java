@@ -1,9 +1,9 @@
 package com.SteshM.MainDella.services;
 
-import com.SteshM.MainDella.DTO.LoginDTO;
-import com.SteshM.MainDella.DTO.ResponseDTO;
-import com.SteshM.MainDella.DTO.UserDTO;
-import com.SteshM.MainDella.DTO.UserTypeDTO;
+import com.SteshM.MainDella.DTO.requests.LoginDTO;
+import com.SteshM.MainDella.DTO.requests.ResponseDTO;
+import com.SteshM.MainDella.DTO.requests.UserDTO;
+import com.SteshM.MainDella.DTO.requests.UserTypeDTO;
 import com.SteshM.MainDella.Entities.Profile;
 import com.SteshM.MainDella.Entities.UserType;
 import com.SteshM.MainDella.Entities.Users;

@@ -1,7 +1,8 @@
 package com.SteshM.MainDella.services;
 
-import com.SteshM.MainDella.DTO.*;
+import com.SteshM.MainDella.DTO.requests.*;
 import com.SteshM.MainDella.DTO.response.ContentTypeDTO;
+import com.SteshM.MainDella.DTO.response.PathDTO;
 import com.SteshM.MainDella.Entities.*;
 import com.SteshM.MainDella.repo.*;
 import com.SteshM.MainDella.utilities.Utilities;
@@ -120,13 +121,13 @@ public ResponseDTO getPaths() {
 
 
 //Creating a Test
-    public ResponseDTO createTest(TestDTO testDTO, Integer courseID,TestEntity testEntity) {
-        TestEntity testEntity1 = new TestEntity();
-        testEntity1.setTestName(testDTO.getTestName());
-        testEntity1.setCourseID(courseID);
-        testRepo.save(testEntity1);
-        return Utilities.createSuccessfulResponse("Successfully created a test", testDTO);
-    }
+public ResponseDTO createTest(TestDTO testDTO, Integer courseID,TestEntity testEntity) {
+    TestEntity testEntity1 = new TestEntity();
+    testEntity1.setTestName(testDTO.getTestName());
+    testEntity1.setCourseID(courseID);
+    testRepo.save(testEntity1);
+    return Utilities.createSuccessfulResponse("Successfully created a test", testDTO);
+}
 
 
     //Retrieving Tests
@@ -149,27 +150,29 @@ public ResponseDTO getPaths() {
 
 
 //Creating a Question
-    public ResponseDTO create(QuestionDTO questionDTO, Integer testID, QuestionEntity questionEntity1) {
-        questionEntity1.setTestId(testID);
-        questionEntity1.setQuestion(questionDTO.getQuestion());
-        QuestionEntity createQuestion = questionRepo.save(questionEntity1);
+public ResponseDTO create(QuestionDTO questionDTO, Integer testID ) {
+    QuestionEntity questionEntity1 =new QuestionEntity();
+    questionEntity1.setTestId(testID);
+    questionEntity1.setQuestion(questionDTO.getQuestion());
+    QuestionEntity createQuestion = questionRepo.save(questionEntity1);
 
-        questionDTO.getAnswers().forEach(
-                answerDTO -> {
-                    AnswersEntity answersEntity = new AnswersEntity();
-                    answersEntity.setQuestionEntity(createQuestion);
-                    answersEntity.setAnswer(answerDTO.getAnswer());
-                    answersEntity.setIsCorrect(answerDTO.isCorrect());
-                    answerRepo.save(answersEntity);
-                }
-        );
-        return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
-    }
+    questionDTO.getAnswers().forEach(
+            answerDTO -> {
+                AnswersEntity answersEntity = new AnswersEntity();
+                answersEntity.setQuestionEntity(createQuestion);
+                answersEntity.setAnswer(answerDTO.getAnswer());
+                answersEntity.setIsCorrect(answerDTO.isCorrect());
+                answerRepo.save(answersEntity);
+            }
+    );
+    return Utilities.createSuccessfulResponse("Successfully created a question",createQuestion);
+}
 
 
     //Retrieving Questions
     public ResponseDTO getQuestions(int testId) {
-        ArrayList<QuestionEntity>questionEntities = questionRepo.findByTestId(testId);
+        List<QuestionEntity>questionEntities = questionRepo.findByTestId(testId);
+        log.info("Fetched {} questions for testID {}",questionEntities.size(), testId);
         return Utilities.createSuccessfulResponse("successfully fetched all questions" , questionEntities);
 
 

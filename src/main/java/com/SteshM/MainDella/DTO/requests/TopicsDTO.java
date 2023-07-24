@@ -1,4 +1,4 @@
-package com.SteshM.MainDella.DTO;
+package com.SteshM.MainDella.DTO.requests;
 
 import lombok.Data;
 
@@ -6,4 +6,5 @@ import lombok.Data;
 public class TopicsDTO {
     private String topicName;
     private int courseId;
+    private int lessonId;
 }

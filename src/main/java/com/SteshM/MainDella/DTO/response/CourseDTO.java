@@ -1,4 +1,4 @@
-package com.SteshM.MainDella.DTO;
+package com.SteshM.MainDella.DTO.response;
 
 import lombok.Data;
 
@@ -6,7 +6,6 @@ import lombok.Data;
 public class CourseDTO {
     private String courseName;
     private String courseDescription;
-    private int pathId;
-    private int courseLevelId;
-
+    private String courseLevelName;
+    private String courseLevelDescription;
 }
