@@ -7,6 +7,9 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
+
+
+
 	</parent>
 	<groupId>com.SteshM</groupId>
 	<artifactId>MainDella</artifactId>
@@ -76,7 +79,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
