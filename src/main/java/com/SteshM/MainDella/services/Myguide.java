@@ -18,10 +18,6 @@ public interface Myguide {
     public abstract ResponseDTO addLesson(LessonsDTO dto);
     public ArrayList<LessonsEntity>getTopicLessons(int topicId);
 
-    public abstract ResponseDTO addVideo(VideoDTO dto);
-    public ArrayList<VideoDTO>getLessonVideos(int lessonId);
 
-    public abstract ResponseDTO addPdf(PathDTO dto);
-    public ArrayList<PdfEntity>getLessonPdf(int lessonId);
 
 }
