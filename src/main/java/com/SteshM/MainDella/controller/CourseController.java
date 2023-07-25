@@ -58,7 +58,6 @@ public class CourseController {
     }
 
 
-
     //creating topics
     @PostMapping("/course/topic")
     public ResponseDTO createTopic(@RequestBody TopicsDTO topic){

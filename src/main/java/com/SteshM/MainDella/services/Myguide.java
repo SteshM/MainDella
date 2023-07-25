@@ -4,7 +4,6 @@ import com.SteshM.MainDella.DTO.requests.*;
 import com.SteshM.MainDella.DTO.response.PathDTO;
 import com.SteshM.MainDella.Entities.LessonsEntity;
 import com.SteshM.MainDella.Entities.PathEntity;
-import com.SteshM.MainDella.Entities.PdfEntity;
 import com.SteshM.MainDella.Entities.TopicsEntity;
 
 import java.util.ArrayList;

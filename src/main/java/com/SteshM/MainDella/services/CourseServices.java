@@ -31,8 +31,6 @@ public class CourseServices {
     private final PathRepo pathRepo;
     private final TopicsRepo topicsRepo;
     private final LessonsRepo lessonsRepo;
-    private final  VideoRepo videoRepo;
-    private final PdfRepo pdfRepo;
 
 //Creating a Path
 
@@ -94,7 +92,6 @@ public ResponseDTO getPaths() {
     public ResponseDTO createLesson(LessonsDTO lessonsDTO) {
     LessonsEntity lessonsEntity = new LessonsEntity();
     lessonsEntity.setLessonName(lessonsDTO.getLessonName());
-    lessonsEntity.setContent(lessonsDTO.getContent());
     TopicsEntity topicsEntity = topicsRepo.findById(lessonsDTO.getTopicId()).get();
     lessonsEntity.setTopics(topicsEntity);
     lessonsRepo.save(lessonsEntity);
@@ -177,69 +174,41 @@ public ResponseDTO create(QuestionDTO questionDTO, Integer testID ) {
 
 
     }
-
-
     public ResponseDTO getLessons()
             {
     List<LessonsEntity>lessonsEntities = lessonsRepo.findAll();
     return Utilities.createSuccessfulResponse("Successfully fetched lessons", lessonsEntities);
-    }
 
-    public ResponseDTO createVideo(VideoDTO videoDTO) {
-    VideoEntity videoEntity = new VideoEntity();
-    videoEntity.setVideoName(videoDTO.getVideoName());
-    videoEntity.setDuration(videoDTO.getDuration());
-    LessonsEntity lessonsEntity = lessonsRepo.findById(videoDTO.getLessonId()).get();
-    videoEntity.setLessonsEntity(lessonsEntity);
-    videoRepo.save(videoEntity);
-    return Utilities.createSuccessfulResponse("Successfully created a video",videoEntity);
-    }
 
-    public ResponseDTO getVideos() {
-    List<VideoEntity>videoEntities = videoRepo.findAll();
-    return Utilities.createSuccessfulResponse("Successfully fetched all videos" , videoEntities);
-    }
 
-    public ResponseDTO createPdf(PdfDTO pdfDTO) {
-    PdfEntity pdfEntity = new PdfEntity();
-    pdfEntity.setPdfName(pdfDTO.getPdfName());
-    LessonsEntity lessonsEntity = lessonsRepo.findById(pdfDTO.getLessonId()).get();
-    pdfEntity.setLessonsEntity(lessonsEntity);
-    pdfRepo.save(pdfEntity);
-    return Utilities.createSuccessfulResponse("Successfully created a Pdf",pdfEntity);
-    }
+}
 
-    public ResponseDTO getPdfs() {
-    List<PdfEntity>pdfEntities = pdfRepo.findAll();
-    return Utilities.createSuccessfulResponse("Successfully fetched Pdfs",pdfEntities);
+    public ResponseDTO fetchContentTypes() {
+        List<ContentType>contentTypes = contentTypeRepo.findAll();
+        log.info("Fetched {} contentTypes", contentTypes.size());
+
+        List<ContentTypeDTO>contentTypeDTOS = new ArrayList<>();
+
+        contentTypes.forEach(
+                contentType -> {
+                    ContentTypeDTO contentTypeDTO = new ContentTypeDTO();
+                    contentTypeDTO.setContentTypeId(contentType.getContentTypeId());
+                    contentTypeDTO.setContentTypename(contentType.getContentTypeName());
+                    contentTypeDTOS.add(contentTypeDTO);
+                }
+        );
+        return Utilities.createSuccessfulResponse("Successfully fetched contentTypes", contentTypeDTOS);
+
     }
 
     public ResponseDTO getEnrolledUsers(int courseId) {
         List<UserCourseMapping>  userCourseMappings = userCourseMappingRepo.findByCourseId(courseId);
         List<String>usernames = new ArrayList<>();
-       for(UserCourseMapping userCourseMapping:userCourseMappings){
-           Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
-           usernames.add(user.getName());
-       }
+        for(UserCourseMapping userCourseMapping:userCourseMappings){
+            Users user = usersRepo.findById(userCourseMapping.getUserId()).get();
+            usernames.add(user.getName());
+        }
         return Utilities.createSuccessfulResponse("successfully fetched enrolled Users" , usernames);
-    }
-
-    public ResponseDTO fetchContentTypes() {
-            List<ContentType>contentTypes = contentTypeRepo.findAll();
-        log.info("Fetched {} contentTypes", contentTypes.size());
-
-        List<ContentTypeDTO>contentTypeDTOS = new ArrayList<>();
-
-            contentTypes.forEach(
-                    contentType -> {
-                        ContentTypeDTO contentTypeDTO = new ContentTypeDTO();
-                        contentTypeDTO.setContentTypeId(contentType.getContentTypeId());
-                        contentTypeDTO.setContentTypename(contentType.getContentTypeName());
-                        contentTypeDTOS.add(contentTypeDTO);
-                    }
-            );
-        return Utilities.createSuccessfulResponse("Successfully fetched contentTypes", contentTypeDTOS);
-
     }
 }
 

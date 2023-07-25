@@ -10,7 +10,6 @@ import com.SteshM.MainDella.Entities.Users;
 import com.SteshM.MainDella.repo.ProfileRepo;
 import com.SteshM.MainDella.repo.UsersRepo;
 import com.SteshM.MainDella.repo.UserTypeRepo;
-import com.SteshM.MainDella.utilities.CustomUserDetails;
 import com.SteshM.MainDella.utilities.Utilities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,7 +90,6 @@ PasswordEncoder encoder;
     public ResponseDTO login(AuthRequest authRequest) {
         String username = authRequest.getUsername();
        Optional<Profile>  profile = profileRepo.findByUsername(username);
-//        profile.get();
         log.info("fetched a profile by username{}", profile);
         if (authRequest.getPassword().equals(profile.get().getPassword())) {
             log.info("logged i successfully");

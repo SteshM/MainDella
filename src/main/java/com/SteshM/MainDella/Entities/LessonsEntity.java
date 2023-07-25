@@ -18,7 +18,6 @@ public class LessonsEntity {
     private  int lessonId;
     private String lessonName;
 
-    private String content;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "topicId")

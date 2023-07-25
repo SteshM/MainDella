@@ -1,6 +1,6 @@
 package com.SteshM.MainDella.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,16 +10,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "video")
-public class VideoEntity {
+public class ContentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int videoId;
-    private String videoName;
-    private String duration;
-
-    @JsonManagedReference
+    private int contentId;
+    private String contentUrl;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "lessonId")
     private LessonsEntity lessonsEntity;
+
+
 }
