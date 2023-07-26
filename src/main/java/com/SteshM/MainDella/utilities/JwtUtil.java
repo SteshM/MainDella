@@ -19,7 +19,7 @@ public class JwtUtil {
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
 
-    public String extractUsername(String token) {
+    public String extractUsername(String token)throws Exception {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -46,7 +46,12 @@ public class JwtUtil {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
+         String username = null;
+        try{
+            username = extractUsername(token);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

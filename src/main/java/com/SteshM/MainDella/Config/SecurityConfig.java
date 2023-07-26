@@ -46,7 +46,7 @@ builder.userDetailsService(userDetailsService).passwordEncoder(encoder);
                     .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.requestMatchers("/welcome/**").hasAnyAuthority("Tutor","Learner"))
                     .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests.anyRequest().authenticated())
                     .sessionManagement((sessionManagement)->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthFilter() , UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtUtil) , UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(new Authentication(this.authenticationManager(), jwtUtil), BasicAuthenticationFilter.class)
                     .build();
     }
